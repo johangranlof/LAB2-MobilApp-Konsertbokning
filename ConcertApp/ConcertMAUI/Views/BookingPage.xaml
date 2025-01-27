@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="ConcertMAUI.Views.BookingPage"
+    Title="Bokning">
+    <VerticalStackLayout
+        Margin="10"
+        Spacing="10">
+        <Label
+            Text="{Binding Show.Location}"
+            FontSize="Large"
+            HorizontalOptions="Center" />
+        <Label
+            Text="{Binding Show.DateTime}"
+            FontSize="Small"
+            HorizontalOptions="Center" />
+        <Label
+            Text="Namn" />
+        <Entry
+            Text="{Binding Customer.Name}"
+            Placeholder="Ange namn" />
+        <Label
+            Text="E-post" />
+        <Entry
+            Text="{Binding Customer.Email}"
+            Placeholder="Ange e-post" />
+        <Label
+            Text="Telefonnummer" />
+        <Entry
+            Text="{Binding Customer.Phone}"
+            Placeholder="Ange telefonnummer" />
+        <Button
+            Text="Boka Konserten"
+            Command="{Binding BookCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

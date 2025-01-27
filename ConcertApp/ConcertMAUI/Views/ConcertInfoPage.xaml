@@ -1,0 +1,138 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="ConcertMAUI.Views.ConcertInfoPage"
+    xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Name="ConcertInfo"
+    Title="Konsertinformation"
+    BackgroundImageSource="concertimage.jfif">
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding AppearingCommand}" />
+    </ContentPage.Behaviors>
+    <ScrollView
+        Padding="10">
+        <StackLayout
+            Spacing="15">
+            <Frame
+                CornerRadius="10"
+                HasShadow="True"
+                BackgroundColor="#e6ffffff"
+                BorderColor="#e6ffffff">
+                <StackLayout
+                    Padding="10">
+                    <Label
+                        Text="Titel"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="Black"
+                        Margin="0, 10, 0, 5" />
+                    <Label
+                        Text="{Binding Concert.Title}"
+                        FontSize="16"
+                        TextColor="Black" />
+                    <Label
+                        Text="Beskrivning"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="Black"
+                        Margin="0, 15, 0, 5" />
+                    <Label
+                        Text="{Binding Concert.Description}"
+                        FontSize="16"
+                        TextColor="Black" />
+                    <Label
+                        Text="Varaktighet"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="Black"
+                        Margin="0, 15, 0, 5" />
+                    <Label
+                        Text="{Binding Concert.Duration}"
+                        FontSize="16"
+                        TextColor="Black" />
+                    <Label
+                        Text="Pris"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="Black"
+                        Margin="0, 15, 0, 5" />
+                    <Label
+                        Text="{Binding Concert.Price, StringFormat='{}{0:C}'}"
+                        FontSize="16"
+                        TextColor="Black" />
+                    <Label
+                        Text="Genre"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="Black"
+                        Margin="0, 15, 0, 5" />
+                    <CollectionView
+                        ItemsSource="{Binding Concert.Genres}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout
+                                    Orientation="Horizontal">
+                                    <Label
+                                        Text="• "
+                                        FontSize="20"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Start" />
+                                    <Label
+                                        Text="{Binding Name}"
+                                        FontSize="16"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Start"
+                                        TextColor="Black" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Label
+                        Text="Antal Bokningar"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="Black"
+                        Margin="0, 15, 0, 5" />
+                    <Label
+                        Text="{Binding TotalBookings, Mode=TwoWay}"
+                        FontSize="16"
+                        TextColor="Black" />
+                </StackLayout>
+            </Frame>
+            <Frame
+                BackgroundColor="#e6FFFFFF"
+                BorderColor="#e6FFFFFF">
+                <CollectionView
+                    ItemsSource="{Binding Concert.Shows}"
+                    SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout
+                                Padding="10">
+                                <Label
+                                    Text="{Binding Location}"
+                                    FontSize="18"
+                                    FontAttributes="Bold"
+                                    TextColor="Black" />
+                                <Label
+                                    Text="{Binding DateTime, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}"
+                                    FontAttributes="Bold"
+                                    TextColor="Black" />
+                                <Button
+                                    Text="Boka"
+                                    Command="{Binding Source={x:Reference ConcertInfo}, Path=BindingContext.BookShowCommand}"
+                                    CommandParameter="{Binding}"
+                                    FontSize="16"
+                                    BackgroundColor="#4CAF50"
+                                    TextColor="White"
+                                    CornerRadius="5" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConcertMAUI.Views.MainPage"
+             xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="Välkommen till en värld av konserter!">
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding AppearingCommand}" />
+    </ContentPage.Behaviors>
+    <ScrollView>
+        <VerticalStackLayout Margin="20,10,20,0">
+            <Grid VerticalOptions="Start">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Entry x:Name="BookingNumberEntry"
+                       Placeholder="Ange bokningsnummer"
+                       Text="{Binding SearchTerm}"
+                       Keyboard="Numeric"
+                       VerticalOptions="Center"
+                       HorizontalOptions="FillAndExpand"
+                       Grid.Column="0" />
+                <Button Text="Sök" 
+                        HeightRequest="35"
+                        Grid.Column="1" 
+                        Command="{Binding SearchCommand}" />
+            </Grid>
+            <StackLayout IsVisible="{Binding IsAnySearchMade}">
+                <Frame BackgroundColor="Transparent"
+                       BorderColor="Gray"
+                       CornerRadius="10"
+                       HasShadow="True"
+                       VerticalOptions="FillAndExpand"
+                       Margin="0,20,0,20">
+                    <StackLayout Padding="10" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label Text="{Binding DisplayConcertInfo}"
+                               FontAttributes="Bold" 
+                               FontSize="Medium"/>
+                        <Button
+                            Command="{Binding DeleteBookingCommand}"
+                            Text="Avboka"
+                            TextColor="Black"
+                            BackgroundColor="Red"
+                            IsVisible="{Binding IsBookingSelected}">
+                        </Button>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <Grid VerticalOptions="Start">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Konserter"
+                       FontSize="Large"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       Grid.Column="0" />
+                <Picker
+                    ItemsSource="{Binding Genres}"
+                    SelectedItem="{Binding SelectedGenre}"
+                    Grid.Column="1"
+                    Title="Välj genre"
+                    VerticalOptions="Center"
+                    ItemDisplayBinding="{Binding Name}"></Picker>
+            </Grid>
+            <CollectionView
+                x:Name="collectionView"
+                Margin="10"
+                SelectionMode="Single"
+                ItemsSource="{Binding Concerts}"
+                SelectedItem="{Binding SelectedConcert, Mode=TwoWay}">
+                <CollectionView.Behaviors>
+                    <behaviors:EventToCommandBehavior
+                        EventName="SelectionChanged"
+                        Command="{Binding SelectionChangedCommand}" />
+                </CollectionView.Behaviors>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout
+                            Padding="15"
+                            BackgroundColor="White"
+                            Margin="0,5,0,10"
+                            Spacing="10"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Start">
+                            <Label
+                                Text="{Binding Title}"
+                                FontSize="18"
+                                FontAttributes="Bold"
+                                TextColor="#333"
+                                VerticalOptions="Start"
+                                LineBreakMode="TailTruncation" />
+                            <Label
+                                Text="{Binding Description}"
+                                FontSize="14"
+                                TextColor="#777"
+                                VerticalOptions="Start"
+                                LineBreakMode="TailTruncation"
+                                Margin="0,5,0,0" />
+                            <BoxView
+                                HeightRequest="1"
+                                BackgroundColor="#DDDDDD"
+                                HorizontalOptions="FillAndExpand" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
